@@ -1,0 +1,88 @@
+
+syntax = "proto3";
+
+import public "google/protobuf/empty.proto";
+
+//
+// A generic status message returned by the API
+
+message StatusOutput {
+  uint32 code = 1;
+  string message = 2;
+}
+
+//
+// GreetingV1 API
+
+service GreetingV1Proto {
+  rpc GetGreeting (GreetingV1Input) returns (GreetingV1Output) {}
+}
+
+message GreetingV1Input {
+}
+
+message GreetingV1Output {
+  string message = 1;
+}
+
+//
+// GreetingV2 API
+
+service GreetingV2Proto {
+  rpc GetGreeting (GreetingV2Input) returns (GreetingV2Output) {}
+}
+
+message GreetingV2Input {
+  string name = 1;
+}
+
+message GreetingV2Output {
+  string message = 1;
+}
+
+//
+// Healthz API
+
+service HealthzProto {
+  rpc GetHealth (HealthzInput) returns (StatusOutput) {}
+}
+
+message HealthzInput {
+}
+
+//
+// Resource API
+
+service ResourceV1Proto {
+  rpc List (google.protobuf.Empty) returns (ResourcesV1) {}
+  rpc Get (ResourceV1IdInput) returns (ResourceV1Output) {}
+  rpc Create (ResourceV1) returns (ResourceV1Output) {}
+  rpc Modify (ResourceV1) returns (ResourceV1Output) {}
+  rpc Remove (ResourceV1IdInput) returns (StatusOutput) {}
+}
+
+message ResourceV1IdInput {
+  uint64 id = 1;
+}
+
+message ResourceV1Output {
+  StatusOutput status = 1;
+  ResourceV1 resource = 2;
+}
+
+message ResourceV1 {
+  uint64 id = 1;
+  uint64 owner_id = 2;
+  string name = 3;
+}
+
+message OwnerV1 {
+  uint64 id = 1;
+  string client_id = 2;
+  string name = 3;
+}
+
+message ResourcesV1 {
+  StatusOutput status = 1;
+  repeated ResourceV1 resources = 2;
+}
