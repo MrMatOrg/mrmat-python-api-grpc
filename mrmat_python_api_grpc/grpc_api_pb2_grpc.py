@@ -228,13 +228,13 @@ class ResourceV1ProtoStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.GetAll = channel.unary_unary(
-                '/ResourceV1Proto/GetAll',
+        self.List = channel.unary_unary(
+                '/ResourceV1Proto/List',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=grpc__api__pb2.ResourcesV1.FromString,
                 )
-        self.GetOne = channel.unary_unary(
-                '/ResourceV1Proto/GetOne',
+        self.Get = channel.unary_unary(
+                '/ResourceV1Proto/Get',
                 request_serializer=grpc__api__pb2.ResourceV1IdInput.SerializeToString,
                 response_deserializer=grpc__api__pb2.ResourceV1Output.FromString,
                 )
@@ -261,13 +261,13 @@ class ResourceV1ProtoServicer(object):
 
     """
 
-    def GetAll(self, request, context):
+    def List(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetOne(self, request, context):
+    def Get(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -294,13 +294,13 @@ class ResourceV1ProtoServicer(object):
 
 def add_ResourceV1ProtoServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GetAll': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetAll,
+            'List': grpc.unary_unary_rpc_method_handler(
+                    servicer.List,
                     request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                     response_serializer=grpc__api__pb2.ResourcesV1.SerializeToString,
             ),
-            'GetOne': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetOne,
+            'Get': grpc.unary_unary_rpc_method_handler(
+                    servicer.Get,
                     request_deserializer=grpc__api__pb2.ResourceV1IdInput.FromString,
                     response_serializer=grpc__api__pb2.ResourceV1Output.SerializeToString,
             ),
@@ -333,7 +333,7 @@ class ResourceV1Proto(object):
     """
 
     @staticmethod
-    def GetAll(request,
+    def List(request,
             target,
             options=(),
             channel_credentials=None,
@@ -343,14 +343,14 @@ class ResourceV1Proto(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ResourceV1Proto/GetAll',
+        return grpc.experimental.unary_unary(request, target, '/ResourceV1Proto/List',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             grpc__api__pb2.ResourcesV1.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def GetOne(request,
+    def Get(request,
             target,
             options=(),
             channel_credentials=None,
@@ -360,7 +360,7 @@ class ResourceV1Proto(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ResourceV1Proto/GetOne',
+        return grpc.experimental.unary_unary(request, target, '/ResourceV1Proto/Get',
             grpc__api__pb2.ResourceV1IdInput.SerializeToString,
             grpc__api__pb2.ResourceV1Output.FromString,
             options, channel_credentials,

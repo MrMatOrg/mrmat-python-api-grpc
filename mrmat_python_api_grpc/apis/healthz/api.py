@@ -20,10 +20,17 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
+"""
+Implementation of the Healthz API
+"""
+
 from mrmat_python_api_grpc import mrmat_grpc, mrmat_grpc_model
 
 
 class HealthzAPI(mrmat_grpc.HealthzProtoServicer):
+    """
+    Implementation of the Healthz API
+    """
 
-    def GetHealth(self, request, context):
+    def GetHealth(self, request: mrmat_grpc_model.HealthzInput, context):       # pylint: disable=unused-argument
         return mrmat_grpc_model.StatusOutput(code=200, message='OK')

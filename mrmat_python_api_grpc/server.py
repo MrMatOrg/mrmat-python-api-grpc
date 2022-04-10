@@ -21,23 +21,27 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
+"""
+Implementation of a central gRPC server with the ability to host multiple APIs
+"""
+
 import sys
 from concurrent import futures
 import grpc
 
-from mrmat_python_api_grpc.apis.greeting.v1 import GreetingV1Api
-from mrmat_python_api_grpc.apis.greeting.v2 import GreetingV2Api
-from mrmat_python_api_grpc.apis.healthz import HealthzAPI
-from mrmat_python_api_grpc.apis.resource.v1 import ResourceV1API
+from mrmat_python_api_grpc.apis.greeting.v1 import api as GreetingV1Api
+from mrmat_python_api_grpc.apis.greeting.v2 import api as GreetingV2Api
+from mrmat_python_api_grpc.apis.healthz import api as HealthzAPI
+from mrmat_python_api_grpc.apis.resource.v1 import api as ResourceV1API
 from mrmat_python_api_grpc import mrmat_grpc
 
 
 def main():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    mrmat_grpc.add_GreetingV1Servicer_to_server(GreetingV1Api(), server)
-    mrmat_grpc.add_GreetingV2Servicer_to_server(GreetingV2Api(), server)
-    mrmat_grpc.add_HealthzServicer_to_server(HealthzAPI(), server)
-    mrmat_grpc.add_ResourceV1ProtocolServicer_to_server(ResourceV1API(), server)
+    mrmat_grpc.add_GreetingV1ProtoServicer_to_server(GreetingV1Api(), server)
+    mrmat_grpc.add_GreetingV2ProtoServicer_to_server(GreetingV2Api(), server)
+    mrmat_grpc.add_HealthzProtoServicer_to_server(HealthzAPI(), server)
+    mrmat_grpc.add_ResourceV1ProtoServicer_to_server(ResourceV1API(), server)
     server.add_insecure_port('localhost:50051')
     server.start()
     print('Waiting for connection...')

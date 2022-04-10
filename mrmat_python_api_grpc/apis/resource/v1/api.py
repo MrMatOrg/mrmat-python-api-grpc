@@ -20,55 +20,58 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-from typing import List
+"""
+Implementation of the Resource API over gRPC
+"""
+
+import typing
 from mrmat_python_api_grpc import mrmat_grpc, mrmat_grpc_model
 
 
 class ResourceV1API(mrmat_grpc.ResourceV1ProtoServicer):
+    """
+    Implementation of the Resource API over gRPC
+    """
 
-    _resources: List[mrmat_grpc_model.ResourceV1]
+    _resources: typing.List[mrmat_grpc_model.ResourceV1]
 
     def __init__(self):
         self._resources = []
 
-    def GetAll(self, request, context):
+    def List(self, request, context):   # pylint: disable=W0613
         return mrmat_grpc_model.ResourcesV1(
             status=mrmat_grpc_model.StatusOutput(code=200, message='OK'),
             resources=self._resources)
 
-    def GetOne(self, request: mrmat_grpc_model.ResourceV1IdInput, context):
-        resource = filter(lambda _: _.id == request.id, self._resources)
-        if resource:
+    def Get(self, request: mrmat_grpc_model.ResourceV1IdInput, context): # pylint: disable=W0613
+        resource = list(filter(lambda _: _.id == request.id, self._resources))
+        if resource and len(resource) > 0:
             return mrmat_grpc_model.ResourceV1Output(
                 status=mrmat_grpc_model.StatusOutput(code=200, message='OK'),
-                resource=resource)
+                resource=resource[0])
         return mrmat_grpc_model.ResourceV1Output(
-            status=mrmat_grpc_model.StatusOutput(code=404, message='Not Found'),
-            resource=mrmat_grpc_model.ResourceV1())
+            status=mrmat_grpc_model.StatusOutput(code=404, message='Not Found'))
 
-    def Create(self, request: mrmat_grpc_model.ResourceV1, context):
+    def Create(self, request: mrmat_grpc_model.ResourceV1, context):  # pylint: disable=W0613
+        request.id = len(self._resources)
         self._resources.append(request)
         return mrmat_grpc_model.ResourceV1Output(
             status=mrmat_grpc_model.StatusOutput(code=201, message='Created'),
             resource=request)
 
-    def Modify(self, request: mrmat_grpc_model.ResourceV1, context):
-        resource = filter(lambda _: _.id == request.id, self._resources)
-        if not resource:
+    def Modify(self, request: mrmat_grpc_model.ResourceV1, context):  # pylint: disable=W0613
+        resource = list(filter(lambda _: _.id == request.id, self._resources))
+        if not resource or len(resource) != 1:
             return mrmat_grpc_model.ResourceV1Output(
-                status=mrmat_grpc_model.StatusOutput(code=404, message='Not Found'),
-                resource=mrmat_grpc_model.ResourceV1())
-        resource.name = request.name
+                status=mrmat_grpc_model.StatusOutput(code=404, message='Not Found'))
+        resource[0].name = request.name
         return mrmat_grpc_model.ResourceV1Output(
             status=mrmat_grpc_model.StatusOutput(code=200, message='OK'),
-            resource=resource)
+            resource=resource[0])
 
-    def Remove(self, request: mrmat_grpc_model.ResourceV1, context):
-        resource = filter(lambda _: _.id == request.id, self._resources)
-        if not resource:
-            return mrmat_grpc_model.ResourceV1Output(
-                status=mrmat_grpc_model.StatusOutput(code=410, message='Gone'),
-                resource=mrmat_grpc_model.ResourceV1())
-        return mrmat_grpc_model.ResourceV1Output(
-            status=mrmat_grpc_model.StatusOutput(code=401, message='Removed'),
-            resource=mrmat_grpc_model.ResourceV1())
+    def Remove(self, request: mrmat_grpc_model.ResourceV1, context):  # pylint: disable=W0613
+        resource = list(filter(lambda _: _.id == request.id, self._resources))
+        if not resource or len(resource) != 1:
+            return mrmat_grpc_model.StatusOutput(code=410, message='Gone')
+        self._resources.remove(resource[0])
+        return mrmat_grpc_model.StatusOutput(code=401, message='Removed')

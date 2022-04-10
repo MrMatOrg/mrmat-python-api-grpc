@@ -20,6 +20,10 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
+"""
+Main entry point for the mrmat_python_api_grpc package
+"""
+
 import os
 import importlib.metadata
 

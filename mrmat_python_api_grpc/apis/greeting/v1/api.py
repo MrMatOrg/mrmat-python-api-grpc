@@ -20,11 +20,17 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
+"""
+Implementation of the Greeting V1 API
+"""
 
 from mrmat_python_api_grpc import mrmat_grpc, mrmat_grpc_model
 
 
 class GreetingV1Api(mrmat_grpc.GreetingV1ProtoServicer):
+    """
+    Implementation of the Greeting V1 API
+    """
 
-    def GetGreeting(self, request, context):
+    def GetGreeting(self, request: mrmat_grpc_model.GreetingV1Input, context):  # pylint: disable=unused-argument
         return mrmat_grpc_model.GreetingV1Output(message='Hello World')

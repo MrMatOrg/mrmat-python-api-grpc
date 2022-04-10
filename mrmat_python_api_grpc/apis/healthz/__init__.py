@@ -20,4 +20,8 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
+"""
+Main entry point for the Healthz APi
+"""
+
 from .api import HealthzAPI as api
