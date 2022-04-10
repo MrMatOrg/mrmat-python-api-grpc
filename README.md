@@ -1,7 +1,6 @@
 # MrMat :: Python :: API :: gRPC
 
-[![Build](https://github.com/MrMatOrg/mrmat-python-api-grpc/actions/workflows/build.yml/badge.svg)](https://github.
-com/MrMatOrg/mrmat-python-api-grpc/actions/workflows/build.yml)
+[![Build](https://github.com/MrMatOrg/mrmat-python-api-grpc/actions/workflows/build.yml/badge.svg)](https://github.com/MrMatOrg/mrmat-python-api-grpc/actions/workflows/build.yml)
 
 Boilerplate for a gRPC Python API.
 
