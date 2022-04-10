@@ -27,8 +27,8 @@ Main entry point for the mrmat_python_api_grpc package
 import os
 import importlib.metadata
 
-import grpc_api_pb2_grpc as mrmat_grpc
-import grpc_api_pb2 as mrmat_grpc_model
+import mrmat_python_api_grpc.grpc_api_pb2_grpc as mrmat_grpc
+import mrmat_python_api_grpc.grpc_api_pb2 as mrmat_grpc_model
 
 #
 # Determine the version we're at and a version header we add to each response

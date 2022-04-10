@@ -19,9 +19,35 @@ $ ls dist/
 mrmat_python_api_grpc-1.0.27.dev0-py3-none-any.whl
 ```
 
+### If you need to update the protocol
+
+The protobuf definition is located in the `var/proto/` directory. You can edit the single file currently
+there or add new ones. If you add new files, you can import them as we import Googles Empty message, but
+you must adjust the command to contain all files containing prototypes below and/or the includes via the
+-I option.
+
+```
+python -m grpc_tools.protoc -Ivar/proto --python_out=mrmat_python_api_grpc/ --grpc_python_out=mrmat_python_api_grpc/ 
+grpc-api.proto
+```
+
+This will update two Python files `mrmat_python_api_grpc/grpc_api_pb2.py` and 
+`mrmat_python_api_grpc/grpc_api_pb2_grpc.py`. It is quite annoying that the package option is ignored by the 
+protobuf Python compiler because **you must update the latter with the Python package in which they are stored**. I 
+currently fail to understand how you would otherwise produce a wheel that can be installed somewhere. These files 
+somehow expect to be freestanding.
+
+One could technically argue that its acceptable for just slight modifications of these generated files, but then 
+really it's not. You'll forget. Tears will flow. I wish they just allowed us to specify the package for Python as well.
+
 ## How to use this
 
+You'll get two executables when you install this:
 
+* mrmat-python-api-grpc-server
+* mrmat-python-api-grpc-client
+
+Start the server, it will listen on localhost:50051. Run help on the client, you'll see.
 
 ## How this works
 
