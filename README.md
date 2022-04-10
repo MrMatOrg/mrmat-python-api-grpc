@@ -27,8 +27,11 @@ you must adjust the command to contain all files containing prototypes below and
 -I option.
 
 ```
-python -m grpc_tools.protoc -Ivar/proto --python_out=mrmat_python_api_grpc/ --grpc_python_out=mrmat_python_api_grpc/ 
-grpc-api.proto
+python -m grpc_tools.protoc \
+    -Ivar/proto \
+    --python_out=mrmat_python_api_grpc/ \
+    --grpc_python_out=mrmat_python_api_grpc/ \
+    grpc-api.proto
 ```
 
 This will update two Python files `mrmat_python_api_grpc/grpc_api_pb2.py` and 
